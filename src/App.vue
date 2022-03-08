@@ -1,6 +1,9 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
+  <div id="app-container">
+    Debug - Root Component
+    <div id="app">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -8,8 +11,7 @@
 
 export default {
   name: 'App',
-  components: {
-  }
+  components: {}
 }
 </script>
 

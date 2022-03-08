@@ -14,6 +14,11 @@ const routes = [
         name: 'root',
         component: () => import('../components/Login.vue')
     },
+    {
+        path: '/result',
+        name: 'login-result',
+        component: () => import('../components/LoginResult.vue')
+    }
 ];
 
 const router = new VueRouter(
@@ -22,5 +27,6 @@ const router = new VueRouter(
         base: process.env.BASE_URL,
         routes
     });
+
 
 export default router;
