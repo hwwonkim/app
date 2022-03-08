@@ -1,0 +1,133 @@
+/*** reset css ***/
+*:where(:not(iframe, canvas, img, svg, video):not(svg *, symbol *)) {
+    all: unset;
+    display: revert;
+}
+
+/* Preferred box-sizing value */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Reapply the pointer cursor for anchor tags */
+a, button {
+    cursor: revert;
+}
+
+/* Remove list styles (bullets/numbers) */
+ol, ul, menu {
+    list-style: none;
+}
+
+/* For images to not be able to exceed their container */
+img {
+    max-width: 100%;
+}
+
+/* removes spacing between cells in tables */
+table {
+    border-collapse: collapse;
+}
+
+/* revert the 'white-space' property for textarea elements on Safari */
+textarea {
+    white-space: revert;
+}
+
+/* minimum style to allow to style meter element */
+meter {
+    -webkit-appearance: revert;
+    appearance: revert;
+}
+
+/* reset default text opacity of input placeholder */
+::placeholder {
+    color: unset;
+}
+
+/* fix the feature of 'hidden' attribute.
+   display:revert; revert to element instead of attribute */
+:where([hidden]) {
+    display: none;
+}
+
+/* revert for bug in Chromium browsers
+   - fix for the content editable attribute will work properly. */
+:where([contenteditable]) {
+    -moz-user-modify: read-write;
+    -webkit-user-modify: read-write;
+    overflow-wrap: break-word;
+    -webkit-line-break: after-white-space;
+}
+
+/* apply back the draggable feature - exist only in Chromium and Safari */
+:where([draggable="true"]) {
+    -webkit-user-drag: element;
+}
+
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+}
+
+#login-container {
+    text-align: left;
+    display: inline-flex;
+    flex-direction: column;
+    border: solid gray 2px;
+    border-radius: 5px;
+    width: 30rem;
+    height: 40rem;
+    padding: 1rem;
+    position: relative;
+}
+
+#login-header-container {
+    margin: 2rem 0;
+    padding: 0 1rem;
+}
+
+#login-header {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+#login-input-container {
+    padding: 0 1rem;
+}
+
+#login-input-container > input {
+    display: block;
+    margin: 0.7rem 0 1.5rem 0;
+    padding-bottom: 2px;
+    border-bottom: solid 1px gray;
+    width: 25rem;
+    font-size: 0.9rem;
+}
+
+#login-button-container {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 0 2rem 0 0;
+}
+
+#login-button{
+    background-color: lightblue;
+    font-weight: bolder;
+    padding: 0.5rem 1rem;
+    border-radius: 3px;
+}
+
+#dev-tag{
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    font-weight: lighter;
+    font-size: 0.8rem;
+}
