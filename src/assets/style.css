@@ -147,3 +147,9 @@ meter {
     height: 50rem;
     width: 50rem;
 }
+
+#login-result-page > table, td, tr {
+    max-width: 50rem;
+    word-break: break-all;
+    border: solid 1px black;
+}
