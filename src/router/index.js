@@ -24,6 +24,11 @@ const routes = [
         path: '/test',
         name: 'test',
         component: () => import('../components/contents/Test.vue'),
+    },
+    {
+        path: '/test/modal',
+        name: 'modal-test',
+        component: () => import('../components/contents/ModalExample'),
     }
 ];
 
