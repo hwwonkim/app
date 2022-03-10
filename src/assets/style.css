@@ -111,6 +111,11 @@ meter {
     padding: 0 1rem;
 }
 
+#login-input-container > h2 {
+    font-size: 1rem;
+    font-weight: normal;
+}
+
 #login-input-container > input {
     display: block;
     margin: 0.7rem 0 1.5rem 0;
