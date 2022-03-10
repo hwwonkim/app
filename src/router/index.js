@@ -17,7 +17,8 @@ const routes = [
     {
         path: '/result',
         name: 'login-result',
-        component: () => import('../components/LoginResult.vue')
+        component: () => import('../components/LoginResult.vue'),
+        props: true
     }
 ];
 

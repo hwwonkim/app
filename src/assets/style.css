@@ -4,6 +4,11 @@
     display: revert;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+}
+
 /* Preferred box-sizing value */
 *,
 *::before,

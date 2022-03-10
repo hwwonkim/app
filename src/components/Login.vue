@@ -8,14 +8,14 @@
     <div id="login-button-container">
       <LoginButton @click="onLogin"></LoginButton>
     </div>
-    <div id="dev-tag"> DEVELOPMENT PAGE </div>
+    <div id="dev-tag"> DEVELOPMENT PAGE</div>
   </div>
 </template>
 
 <script>
 import LoginInput from "@/components/LoginInput";
 import LoginButton from "@/components/LoginButton";
-import axios from "axios";
+import {authentication, handleResponseData} from "@/components/utils/AuthenticationApi";
 
 export default {
   name: "Login",
@@ -32,17 +32,12 @@ export default {
   },
   methods: {
     onLogin() {
-      alert("hey")
-      const userId = this.userId
-      const password = this.password
-      axios
-          .post(`https://dev-safetyr3-api.crscube.io/safety/1.0/auth`, { userId, password})
-          .then(res => {
-            const keys = Object.values(res.data)
-            for(let i of keys){
-              console.log(i)
-            }
+      authentication(this.userId, this.password)
+          .then(res => handleResponseData(res))
+          .then(authInfo => {
+            this.$router.push({name: 'login-result', params: {data: authInfo}})
           })
+          .catch(() => console.log("error"))
     }
   }
 }
