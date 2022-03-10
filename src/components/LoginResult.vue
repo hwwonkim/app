@@ -9,6 +9,9 @@
         <td v-else>{{value}}</td>
       </tr>
     </table>
+    <div id="test-debug"> Debug - Vuex - Store <br>
+    {{ this.$store.state.userId}} <br>
+      {{this.$store.state.userSponsor}} <br> {{this.$store.state.userToken}}</div>
   </div>
 </template>
 
@@ -18,8 +21,18 @@ export default {
   props: {
     data: Object
   },
+  methods: {
+    sessionCheck() {
+      alert("DEBUG")
+    }
+  }
 }
 </script>
 
 <style scoped>
+#test-debug {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}
 </style>

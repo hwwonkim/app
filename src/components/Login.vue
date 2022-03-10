@@ -8,6 +8,7 @@
     <div id="login-button-container">
       <LoginButton @click="onLogin"></LoginButton>
     </div>
+    <button @click="onTest">this is vuex test</button>
     <div id="dev-tag"> DEVELOPMENT PAGE</div>
   </div>
 </template>
@@ -31,13 +32,23 @@ export default {
     LoginInput
   },
   methods: {
+    onTest(){
+     alert(JSON.stringify(this.$store.state));
+    },
     onLogin() {
       authentication(this.userId, this.password)
           .then(res => handleResponseData(res))
           .then(authInfo => {
+            this.sessionUpdate(authInfo);
             this.$router.push({name: 'login-result', params: {data: authInfo}})
           })
           .catch(() => console.log("error"))
+    },
+    sessionUpdate(res) {
+      this.$store.commit('login', {
+        userToken: res.data.token,
+        userSponsor: res.data.userKey,
+        userId: res.data.userId});
     }
   }
 }
