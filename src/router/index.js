@@ -19,6 +19,11 @@ const routes = [
         name: 'login-result',
         component: () => import('../components/LoginResult.vue'),
         props: true
+    },
+    {
+        path: '/test',
+        name: 'test',
+        component: () => import('../components/contents/Test.vue'),
     }
 ];
 
