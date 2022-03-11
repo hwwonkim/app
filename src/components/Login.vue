@@ -41,7 +41,7 @@ export default {
           .then(authInfo => this.storeSession(authInfo))
           .then(authInfo => this.initializeSelectedSponsor(authInfo))
           .then(() => this.showSelectSponsorDialog())
-          .catch(err => console.log(err.message))
+          .catch(err => this.errorhandler(err))
     },
     storeSession(authInfo) {
       this.$store.commit('storeSession', {token: authInfo.token, userKey: authInfo.userKey, userId: authInfo.userId});
@@ -60,6 +60,9 @@ export default {
             this.$router.push({name: 'login-result', params: {data: res.data}});
           });
     },
+    errorhandler(err){
+      alert(err);
+    }
   }
 }
 </script>
