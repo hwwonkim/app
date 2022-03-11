@@ -160,3 +160,7 @@ meter {
     border: solid 1px black;
 }
 
+#sender-select-bar {
+    margin-top: 10px;
+
+}
