@@ -7,7 +7,7 @@
       <LoginButton @click="onLogin"/>
     </div>
     <div class="dev-tag">DEVELOPMENT PAGE</div>
-    <SelectSponsorDialog ref="select-sponsor-modal" :sponsors="sponsors" :senders="senders"/>
+    <SelectSponsorDialog ref="select-sponsor-modal" :sponsors="sponsors" :user-key="userKey"/>
   </div>
 </template>
 
@@ -15,7 +15,7 @@
 import LoginInput from "@/components/LoginInput";
 import LoginButton from "@/components/LoginButton";
 import SelectSponsorDialog from "@/components/SelectSponsorDialog";
-import {authentication, handleResponseData, retrieveUserSenders} from "@/components/utils/authenticationApi";
+import {authentication, handleResponseData} from "@/components/utils/authenticationApi";
 
 export default {
   name: "Login",
@@ -25,6 +25,7 @@ export default {
       password: "",
       sponsors: null,
       senders: null,
+      userKey: null,
     }
   },
   components: {
@@ -42,10 +43,7 @@ export default {
     },
     initializeSelectedSponsor(authInfo) {
       this.sponsors = authInfo.data.sponsorList;
-      return retrieveUserSenders(this.sponsors[0].sponsorKey, authInfo.userKey)
-          .then(senderInfo => {
-            this.senders = senderInfo.data.senders;
-          });
+      this.userKey = authInfo.userKey;
     },
     showSelectSponsorDialog() {
       this.$refs["select-sponsor-modal"].showModal();

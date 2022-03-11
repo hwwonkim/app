@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from "@/router";
-import {store} from "@/components/vuex";
+import {store} from "@/vuex";
 import BootstrapVue, {ButtonPlugin, IconsPlugin, ToastPlugin} from "bootstrap-vue";
 
 import 'bootstrap/dist/css/bootstrap.min.css'
