@@ -1,11 +1,3 @@
-import axios from "axios";
-
-function authentication(userId, password) {
-    return axios
-        .post(`https://dev-safetyr3-api.crscube.io/safety/1.0/auth`, {userId, password})
-        .then((res) => res.data);
-}
-
 function handleResponseData(resData) {
     if (resData.success) {
         return Promise.resolve(resData); //authInfo
@@ -16,4 +8,4 @@ function handleResponseData(resData) {
     }
 }
 
-export {authentication, handleResponseData};
+export {handleResponseData};

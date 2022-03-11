@@ -138,7 +138,7 @@ meter {
     border-radius: 3px;
 }
 
-#dev-tag {
+.dev-tag {
     position: absolute;
     bottom: 10px;
     right: 15px;
