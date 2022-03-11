@@ -6,13 +6,13 @@
 
 <script>
 export default {
-  name: "LoginResult",
+  name: 'LoginResult',
   props: {
     data: Object
   },
   methods: {
     sessionCheck() {
-      alert("DEBUG")
+      alert('DEBUG')
     }
   }
 }

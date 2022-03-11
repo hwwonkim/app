@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "Table.vue",
+  name: 'Table.vue',
   data() {
     return {
       keyOrder: Number

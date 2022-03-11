@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: "DropDownMenu",
+  name: 'DropDownMenu',
   props: {
     contents: Array,
     dropdownId: null,

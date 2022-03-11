@@ -30,10 +30,10 @@
 
 <script>
 export default {
-  name: "ModalExample",
+  name: 'ModalExample',
   data() {
     return {
-      selectSponsorText: "스폰서를 선택하세요"
+      selectSponsorText: '스폰서를 선택하세요'
     }
   },
   methods: {

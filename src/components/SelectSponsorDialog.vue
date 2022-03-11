@@ -17,7 +17,7 @@
 import {retrieveUserSenders} from "@/components/utils/authenticationApi";
 
 export default {
-  name: "SelectSponsorDialog",
+  name: 'SelectSponsorDialog',
   data() {
     return {
       sponsorList: Array,

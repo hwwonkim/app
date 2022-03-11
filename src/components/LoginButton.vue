@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "LoginButton",
+  name: 'LoginButton',
   methods: {
     onClick($event) {
       this.$emit('click', $event)

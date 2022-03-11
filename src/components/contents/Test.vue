@@ -16,10 +16,10 @@
 
 <script>
 export default {
-  name: "Test",
+  name: 'Test',
   data() {
     return {
-      curData: "입력해주세요",
+      curData: '입력해주세요',
     }
   },
   methods: {

@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: "LoginInput",
+  name: 'LoginInput',
   props: {
     name: String,
     inputType: String,

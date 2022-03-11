@@ -19,11 +19,11 @@ import SelectSponsorDialog from "@/components/SelectSponsorDialog";
 import {authentication, getUserAuth, handleResponseData} from "@/components/utils/authenticationApi";
 
 export default {
-  name: "Login",
+  name: 'Login',
   data() {
     return {
-      userId: "",
-      password: "",
+      userId: '',
+      password: '',
       sponsors: null,
       senders: null,
       userKey: null,
@@ -52,7 +52,7 @@ export default {
       this.userKey = authInfo.userKey;
     },
     showSelectSponsorDialog() {
-      this.$refs["select-sponsor-modal"].showModal();
+      this.$refs['select-sponsor-modal'].showModal();
     },
     doLogin(sponsor) {
       getUserAuth(sponsor.sponsorKey)
