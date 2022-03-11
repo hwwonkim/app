@@ -7,14 +7,14 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        userToken: null,
-        userSponsor: null,
+        accessToken: null,
+        userKey: null,
         userId: null
     },
     mutations: {
-        login(state, {userToken, userSponsor, userId}) {
-            state.userToken = userToken;
-            state.userSponsor = userSponsor;
+        storeSession(state, {token, userKey, userId}) {
+            state.accessToken = token;
+            state.userKey = userKey;
             state.userId = userId;
         }
     }

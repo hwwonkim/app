@@ -7,7 +7,8 @@
       <LoginButton @click="onLogin"/>
     </div>
     <div class="dev-tag">DEVELOPMENT PAGE</div>
-    <SelectSponsorDialog ref="select-sponsor-modal" :sponsors="sponsors" :user-key="userKey"/>
+    <SelectSponsorDialog ref="select-sponsor-modal" :sponsors="sponsors" :user-key="userKey"
+                         @confirm="doLogin"/>
   </div>
 </template>
 
@@ -15,7 +16,7 @@
 import LoginInput from "@/components/LoginInput";
 import LoginButton from "@/components/LoginButton";
 import SelectSponsorDialog from "@/components/SelectSponsorDialog";
-import {authentication, handleResponseData} from "@/components/utils/authenticationApi";
+import {authentication, getUserAuth, handleResponseData} from "@/components/utils/authenticationApi";
 
 export default {
   name: "Login",
@@ -37,9 +38,14 @@ export default {
     onLogin() {
       authentication(this.userId, this.password)
           .then(res => handleResponseData(res))
+          .then(authInfo => this.storeSession(authInfo))
           .then(authInfo => this.initializeSelectedSponsor(authInfo))
           .then(() => this.showSelectSponsorDialog())
           .catch(err => console.log(err.message))
+    },
+    storeSession(authInfo) {
+      this.$store.commit('storeSession', {token: authInfo.token, userKey: authInfo.userKey, userId: authInfo.userId});
+      return authInfo;
     },
     initializeSelectedSponsor(authInfo) {
       this.sponsors = authInfo.data.sponsorList;
@@ -48,8 +54,11 @@ export default {
     showSelectSponsorDialog() {
       this.$refs["select-sponsor-modal"].showModal();
     },
-    doLogin() {
-      this.$router.push({name: 'login-result', params: {}});
+    doLogin(sponsor) {
+      getUserAuth(sponsor.sponsorKey)
+          .then(res => {
+            this.$router.push({name: 'login-result', params: {data: res.data}});
+          });
     },
   }
 }
