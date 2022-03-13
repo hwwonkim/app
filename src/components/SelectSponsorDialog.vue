@@ -5,8 +5,8 @@
       <b-form-select v-model="selectedSender" :options="senderList" id="sender-select-bar"/>
       <template #modal-footer>
         <b-button variant="primary"
-        class="float-right"
-        @click="onConfirm">ok</b-button>
+                  class="float-right"
+                  @click="onConfirm">ok</b-button>
       </template>
     </b-modal>
 
@@ -25,6 +25,7 @@ export default {
       senders: Array,
       selectedSponsor: null,
       selectedSender: null,
+      onConfirm: Function,
     }
   },
   props: {
@@ -33,11 +34,14 @@ export default {
   },
   methods: {
     showModal() {
-      this.sponsorList = this.sponsors.map(spo => spo.sponsorName);
-      this.selectedSponsor = this.sponsorList[0];
-      this.changeSponsor();
-      this.$refs['select-sponsor-modal'].show();
-    },
+      return new Promise(resolve => {
+        this.sponsorList = this.sponsors.map(spo => spo.sponsorName);
+        this.selectedSponsor = this.sponsorList[0];
+        this.changeSponsor();
+        this.$refs['select-sponsor-modal'].show();
+        this.onConfirm = () => {
+          resolve(this.sponsors.find(sponsor => sponsor.sponsorName === this.selectedSponsor ?? null));
+        }})},
     changeSponsor() {
       retrieveUserSenders(
           this.sponsors
@@ -49,12 +53,7 @@ export default {
         this.selectedSender = this.senderList[0];
       })
     },
-    onConfirm() {
-      this.$emit('confirm', this.sponsors
-          .filter(sponsor => sponsor.sponsorName === this.selectedSponsor)[0],
-      this.selectedSender);
 
-    }
   },
 }
 </script>

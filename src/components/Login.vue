@@ -7,8 +7,7 @@
       <LoginButton @click="onLogin"/>
     </div>
     <div class="dev-tag">DEVELOPMENT PAGE</div>
-    <SelectSponsorDialog ref="select-sponsor-modal" :sponsors="sponsors" :user-key="userKey"
-                         @confirm="doLogin"/>
+    <SelectSponsorDialog ref="select-sponsor-modal" :sponsors="sponsors" :user-key="userKey"/>
   </div>
 </template>
 
@@ -38,29 +37,27 @@ export default {
     onLogin() {
       authentication(this.userId, this.password)
           .then(res => handleResponseData(res))
-          .then(authInfo => this.storeSession(authInfo))
-          .then(authInfo => this.initializeSelectedSponsor(authInfo))
-          .then(() => this.showSelectSponsorDialog())
+          .then(authInfo => this.showSelectSponsorDialog(authInfo))
+          .then(sponsor => this.doLogin(sponsor))
           .catch(err => this.errorhandler(err))
     },
     storeSession(authInfo) {
       this.$store.commit('storeSession', {token: authInfo.token, userKey: authInfo.userKey, userId: authInfo.userId});
-      return authInfo;
     },
     initializeSelectedSponsor(authInfo) {
+      this.storeSession(authInfo)
       this.sponsors = authInfo.data.sponsorList;
       this.userKey = authInfo.userKey;
     },
-    showSelectSponsorDialog() {
-      this.$refs['select-sponsor-modal'].showModal();
+    showSelectSponsorDialog(authInfo) {
+      this.initializeSelectedSponsor(authInfo);
+      return this.$refs['select-sponsor-modal'].showModal();
     },
     doLogin(sponsor) {
       getUserAuth(sponsor.sponsorKey)
-          .then(res => {
-            this.$router.push({name: 'login-result', params: {data: res.data}});
-          });
+          .then(res => this.$router.push({name: 'login-result', params: {data: res.data}}));
     },
-    errorhandler(err){
+    errorhandler(err) {
       alert(err);
     }
   }

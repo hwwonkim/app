@@ -10,7 +10,7 @@ axios.interceptors.request.use(config => {
 
 function authentication(userId, password) {
     return axios
-        .post(`http://localhost:8180/safety/1.0/auth`, {userId, password})
+        .post(`https://dev-safetyr3-api.crscube.io/safety/1.0/auth`, {userId, password})
         .then((res) => res.data);
 }
 
@@ -27,7 +27,7 @@ function handleResponseData(resData) {
 
 function retrieveUserSenders(sponsorKey, userKey) {
     return axios
-        .get(`http://localhost:8180/safety/1.1/sponsors/${sponsorKey}/users/${userKey}/senders`)
+        .get(`https://dev-safetyr3-api.crscube.io/safety/1.1/sponsors/${sponsorKey}/users/${userKey}/senders`)
         .then(res => res.data);
 }
 
@@ -36,7 +36,7 @@ function getUserAuth(sponsorKey){
         return new Promise(resolve => resolve());
     }
     return axios
-        .get(`http://localhost:8180/safety/1.0/auth/${sponsorKey}`)
+        .get(`https://dev-safetyr3-api.crscube.io/safety/1.0/auth/${sponsorKey}`)
         .then(res => res.data);
 }
 
