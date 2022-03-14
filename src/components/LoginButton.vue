@@ -7,7 +7,7 @@ export default {
   name: 'LoginButton',
   methods: {
     onClick($event) {
-      this.$emit('click', $event)
+      this.$emit('click', $event);
     }
   }
 }

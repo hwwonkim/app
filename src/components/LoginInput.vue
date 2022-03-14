@@ -15,10 +15,10 @@ export default {
   computed: {
     inputData: {
       get() {
-        return this.value
+        return this.value;
       },
       set(inputValue) {
-        this.$emit('input', inputValue)
+        this.$emit('input', inputValue);
       }
     }
   }

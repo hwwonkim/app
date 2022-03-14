@@ -36,7 +36,7 @@ export default {
           .then(res => handleResponseData(res))
           .then(authInfo => this.showSelectSponsorDialog(authInfo))
           .then(sponsor => this.doLogin(sponsor))
-          .catch(err => this.errorhandler(err))
+          .catch(err => this.errorhandler(err));
     },
     showSelectSponsorDialog(authInfo) {
       let sponsors = authInfo.data.sponsorList;

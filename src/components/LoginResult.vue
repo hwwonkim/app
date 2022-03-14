@@ -10,11 +10,6 @@ export default {
   props: {
     data: Object
   },
-  methods: {
-    sessionCheck() {
-      alert('DEBUG')
-    }
-  }
 }
 </script>
 
