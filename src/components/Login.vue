@@ -7,14 +7,14 @@
       <LoginButton @click="onSignIn"/>
     </div>
     <div class="dev-tag">DEVELOPMENT PAGE</div>
-    <SelectSponsorDialog ref="select-sponsor-modal"/>
+    <SelectSponsorModal ref="select-sponsor-modal"/>
   </div>
 </template>
 
 <script>
 import LoginInput from "@/components/LoginInput";
 import LoginButton from "@/components/LoginButton";
-import SelectSponsorDialog from "@/components/SelectSponsorDialog";
+import SelectSponsorModal from "@/components/SelectSponsorModal";
 import {authentication, getUserAuth, handleResponseData} from "@/components/utils/authenticationApi";
 import {isBlank} from "@/components/utils/commonUtils";
 
@@ -27,7 +27,7 @@ export default {
     }
   },
   components: {
-    SelectSponsorDialog,
+    SelectSponsorModal,
     LoginButton,
     LoginInput
   },
@@ -38,21 +38,21 @@ export default {
     onLogin() {
       authentication(this.userId, this.password)
           .then(res => handleResponseData(res))
-          .then(authInfo => this.showSelectSponsorDialog(authInfo))
-          .then(sponsor => this.doLogin(sponsor))
+          .then(authInfo => this.selectSponsorAndSender(authInfo))
           .catch(err => this.errorhandler(err));
     },
-    showSelectSponsorDialog(authInfo) {
-      let sponsors = authInfo.data.sponsorList;
-      let userKey = authInfo.userKey;
+    async selectSponsorAndSender(authInfo) {
       this.storeSession(authInfo);
-      return this.$refs['select-sponsor-modal'].showModal(sponsors, userKey);
+      await this.$refs['select-sponsor-modal'].setUserInformation(authInfo.data.sponsorList, authInfo.userKey);
+      this.$refs['select-sponsor-modal']
+              .showModal()
+              .then(sponsor => this.doLogin(sponsor));
     },
     storeSession(authInfo) {
       this.$store.commit('storeSession', {
         token: authInfo.data.token,
         userKey: authInfo.userKey,
-        userId: authInfo.data.userId
+        userId: authInfo.data.userId,
       });
     },
     doLogin(sponsor) {
@@ -73,7 +73,7 @@ export default {
         resolve();
       }
     },
-    toNextInput(){
+    toNextInput() {
       this.$refs['password'].onFocus();
     },
   }
