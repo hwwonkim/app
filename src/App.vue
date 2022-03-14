@@ -1,7 +1,7 @@
 <template>
-  <div id='app-container'>
+  <div id="app-container">
     Debug - Root Component
-    <div id='app'>
+    <div id="app">
       <router-view></router-view>
     </div>
   </div>

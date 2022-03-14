@@ -6,7 +6,8 @@
       <template #modal-footer>
         <b-button variant="primary"
                   class="float-right"
-                  @click="onConfirm">ok</b-button>
+                  @click="onConfirm"> ok
+        </b-button>
       </template>
     </b-modal>
 
@@ -20,40 +21,37 @@ export default {
   name: 'SelectSponsorDialog',
   data() {
     return {
+      userKey: Number,
+      sponsors: Array,
       sponsorList: Array,
-      senderList: [],
       senders: Array,
+      senderList: [],
       selectedSponsor: null,
       selectedSender: null,
       onConfirm: Function,
     }
   },
-  props: {
-    userKey: Number,
-    sponsors: Array,
-  },
   methods: {
-    showModal() {
-      return new Promise(resolve => {
-        this.sponsorList = this.sponsors.map(spo => spo.sponsorName);
-        this.selectedSponsor = this.sponsorList[0];
-        this.changeSponsor();
-        this.$refs['select-sponsor-modal'].show();
-        this.onConfirm = () => {
-          resolve(this.sponsors.find(sponsor => sponsor.sponsorName === this.selectedSponsor ?? null));
-        }})},
-    changeSponsor() {
-      retrieveUserSenders(
-          this.sponsors
-              .filter(sponsor => sponsor.sponsorName === this.selectedSponsor)[0].sponsorKey,
-          this.userKey)
-      .then(senderInfo => {
-        this.senders = senderInfo.data.senders;
-        this.senderList = this.senders.map(sender => sender.SND_ORGAN);
-        this.selectedSender = this.senderList[0];
-      })
+    showModal(sponsors, userKey) {
+      this.sponsors = sponsors;
+      this.userKey = userKey;
+      this.sponsorList = sponsors?.map(spo => spo.sponsorName) ?? [];
+      this.selectedSponsor = this.sponsorList[0];
+      return this.changeSponsor()
+          .then(() => new Promise(resolve => {
+              this.onConfirm = () => resolve(this.sponsors.find(sponsor => sponsor.sponsorName === this.selectedSponsor));
+              this.$refs['select-sponsor-modal'].show();
+            }));
     },
-
+    changeSponsor() {
+      const {sponsorKey} = this.sponsors.find(sponsor => sponsor.sponsorName === this.selectedSponsor);
+      return retrieveUserSenders(sponsorKey, this.userKey)
+          .then(senderInfo => {
+            this.senders = senderInfo.data.senders;
+            this.senderList = this.senders.map(sender => sender.SND_ORGAN);
+            this.selectedSender = this.senderList[0];
+          });
+    },
   },
 }
 </script>

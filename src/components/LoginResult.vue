@@ -1,6 +1,6 @@
 <template>
   <div id="login-result-page">
-    {{JSON.stringify(data)}}
+    {{ JSON.stringify(data) }}
   </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
 </script>
 
 <style scoped>
-#login-result-page{
+#login-result-page {
   word-break: break-all;
 }
 </style>

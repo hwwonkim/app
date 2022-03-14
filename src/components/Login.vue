@@ -7,7 +7,7 @@
       <LoginButton @click="onLogin"/>
     </div>
     <div class="dev-tag">DEVELOPMENT PAGE</div>
-    <SelectSponsorDialog ref="select-sponsor-modal" :sponsors="sponsors" :user-key="userKey"/>
+    <SelectSponsorDialog ref="select-sponsor-modal"/>
   </div>
 </template>
 
@@ -23,9 +23,6 @@ export default {
     return {
       userId: '',
       password: '',
-      sponsors: null,
-      senders: null,
-      userKey: null,
     }
   },
   components: {
@@ -41,17 +38,18 @@ export default {
           .then(sponsor => this.doLogin(sponsor))
           .catch(err => this.errorhandler(err))
     },
-    storeSession(authInfo) {
-      this.$store.commit('storeSession', {token: authInfo.token, userKey: authInfo.userKey, userId: authInfo.userId});
-    },
-    initializeSelectedSponsor(authInfo) {
-      this.storeSession(authInfo)
-      this.sponsors = authInfo.data.sponsorList;
-      this.userKey = authInfo.userKey;
-    },
     showSelectSponsorDialog(authInfo) {
-      this.initializeSelectedSponsor(authInfo);
-      return this.$refs['select-sponsor-modal'].showModal();
+      let sponsors = authInfo.data.sponsorList;
+      let userKey = authInfo.userKey;
+      this.storeSession(authInfo);
+      return this.$refs['select-sponsor-modal'].showModal(sponsors, userKey);
+    },
+    storeSession(authInfo) {
+      this.$store.commit('storeSession', {
+        token: authInfo.data.token,
+        userKey: authInfo.userKey,
+        userId: authInfo.data.userId
+      });
     },
     doLogin(sponsor) {
       getUserAuth(sponsor.sponsorKey)
@@ -59,7 +57,7 @@ export default {
     },
     errorhandler(err) {
       alert(err);
-    }
+    },
   }
 }
 </script>

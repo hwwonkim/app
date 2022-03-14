@@ -1,21 +1,14 @@
-import axios from "axios";
+import {Axios} from "@/axios-config";
 
-axios.interceptors.request.use(config => {
-    const token = sessionStorage.getItem('ACCESS_TOKEN');
-    if (token) {
-        config.headers.Authorization = `${token}`;
-    }
-    return config;
-});
 
 function authentication(userId, password) {
-    return axios
-        .post(`https://dev-safetyr3-api.crscube.io/safety/1.0/auth`, {userId, password})
+    return Axios
+        .post(`/1.0/auth`, {userId, password})
         .then((res) => res.data);
 }
 
 function handleResponseData(resData) {
-    if (resData.success) {
+    if (resData?.success) {
         sessionStorage.setItem('ACCESS_TOKEN', resData.data.token);
         return Promise.resolve(resData); //authInfo
     } else if (resData.errCode === 1040 && resData.errorDetails) {
@@ -26,17 +19,17 @@ function handleResponseData(resData) {
 }
 
 function retrieveUserSenders(sponsorKey, userKey) {
-    return axios
-        .get(`https://dev-safetyr3-api.crscube.io/safety/1.1/sponsors/${sponsorKey}/users/${userKey}/senders`)
+    return Axios
+        .get(`/1.1/sponsors/${sponsorKey}/users/${userKey}/senders`)
         .then(res => res.data);
 }
 
-function getUserAuth(sponsorKey){
+function getUserAuth(sponsorKey) {
     if (sponsorKey === undefined) {
         return new Promise(resolve => resolve());
     }
-    return axios
-        .get(`https://dev-safetyr3-api.crscube.io/safety/1.0/auth/${sponsorKey}`)
+    return Axios
+        .get(`/1.0/auth/${sponsorKey}`)
         .then(res => res.data);
 }
 

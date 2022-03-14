@@ -1,7 +1,7 @@
 <template>
   <div id="login-input-container">
     <h2>{{ name }}</h2>
-    <input v-bind:type="inputType" v-model="inputData">
+    <input :type="inputType" v-model="inputData">
   </div>
 </template>
 
@@ -14,11 +14,11 @@ export default {
   },
   computed: {
     inputData: {
-      get(){
+      get() {
         return this.value
       },
-      set(val){
-        this.$emit('input', val)
+      set(inputValue) {
+        this.$emit('input', inputValue)
       }
     }
   }
