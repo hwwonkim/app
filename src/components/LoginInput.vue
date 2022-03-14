@@ -1,7 +1,7 @@
 <template>
   <div id="login-input-container">
     <h2>{{ name }}</h2>
-    <input :type="inputType" v-model="inputData">
+    <input :type="inputType" v-model="inputData" ref="input" @keyup.enter="onEnterKey">
   </div>
 </template>
 
@@ -20,7 +20,16 @@ export default {
       set(inputValue) {
         this.$emit('input', inputValue);
       }
-    }
+    },
+  },
+  methods: {
+    onFocus(msg) {
+      if(msg) alert(msg);
+      this.$nextTick(() => this.$refs['input'].focus());
+    },
+    onEnterKey(event){
+      this.$emit('enter', event);
+    },
   }
 }
 </script>

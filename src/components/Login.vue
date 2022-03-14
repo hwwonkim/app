@@ -1,10 +1,10 @@
 <template>
   <div id="login-container">
     <div id="login-header-container"><h1 id="login-header">Sign in</h1></div>
-    <LoginInput v-model="userId" name="USER ID" input-type="text"/>
-    <LoginInput v-model="password" name="PASSWORD" input-type="password"/>
+    <LoginInput v-model="userId" name="USER ID" input-type="text" ref="user-id" @enter="toNextInput"/>
+    <LoginInput v-model="password" name="PASSWORD" input-type="password" ref="password" @enter="onSignIn"/>
     <div id="login-button-container">
-      <LoginButton @click="onLogin"/>
+      <LoginButton @click="onSignIn"/>
     </div>
     <div class="dev-tag">DEVELOPMENT PAGE</div>
     <SelectSponsorDialog ref="select-sponsor-modal"/>
@@ -16,6 +16,7 @@ import LoginInput from "@/components/LoginInput";
 import LoginButton from "@/components/LoginButton";
 import SelectSponsorDialog from "@/components/SelectSponsorDialog";
 import {authentication, getUserAuth, handleResponseData} from "@/components/utils/authenticationApi";
+import {isBlank} from "@/components/utils/commonUtils";
 
 export default {
   name: 'Login',
@@ -31,6 +32,9 @@ export default {
     LoginInput
   },
   methods: {
+    onSignIn() {
+      this.validation(this.onLogin);
+    },
     onLogin() {
       authentication(this.userId, this.password)
           .then(res => handleResponseData(res))
@@ -57,6 +61,20 @@ export default {
     },
     errorhandler(err) {
       alert(err);
+    },
+    validation(resolve, reject) {
+      if (isBlank(this.userId)) {
+        this.$refs['user-id'].onFocus("USER ID is required");
+        reject();
+      } else if (isBlank(this.password)) {
+        this.$refs['password'].onFocus("PASSWORD is required");
+        reject();
+      } else {
+        resolve();
+      }
+    },
+    toNextInput(){
+      this.$refs['password'].onFocus();
     },
   }
 }
